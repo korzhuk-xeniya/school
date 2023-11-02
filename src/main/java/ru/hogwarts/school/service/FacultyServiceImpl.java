@@ -8,6 +8,7 @@ import ru.hogwarts.school.model.Faculty;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,7 +53,7 @@ public class FacultyServiceImpl implements FacultyService {
     @Override
     public Collection<Faculty> facultySorter(String color) {
         return repositoryOfFaculty.values().stream()
-                .filter(faculty -> faculty.getColor() == color)
-                .collect(Collectors.toUnmodifiableList());
+                .filter(faculty -> Objects.equals(faculty.getColor(), color))
+                .toList();
     }
 }

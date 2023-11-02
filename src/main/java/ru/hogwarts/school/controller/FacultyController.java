@@ -30,7 +30,7 @@ public class FacultyController {
     public Faculty delete (@PathVariable long id) {
         return facultyService.delete(id);
     }
-    @GetMapping("/faculty/{color}")
+    @GetMapping("/color/{color}")
     public Collection<Faculty> facultySorter(@PathVariable String color) {
         return facultyService.facultySorter(color);
     }
