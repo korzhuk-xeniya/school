@@ -17,7 +17,7 @@ public class FacultyServiceImpl implements FacultyService {
     private Long idCounter = 0L;
     @Override
     public Faculty create(Faculty faculty) {
-        if (repositoryOfFaculty.containsValue(faculty)) {
+        if (repositoryOfFaculty.containsValue(faculty)){
             throw new FacultyAlreadyExsitsException("Факультет" + faculty + "уже есть в хранилище");
         }
         long id = ++idCounter;

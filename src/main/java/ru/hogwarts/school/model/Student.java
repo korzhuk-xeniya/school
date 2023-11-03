@@ -6,6 +6,12 @@ public class Student {
     private Long id;
     private  String name;
     private  int age;
+    private static Long idCounter = 0L;
+    public Student(String name, int age) {
+        this.id = ++idCounter;
+        this.name = name;
+        this.age = age;
+    }
 
     public Long getId() {
         return id;
