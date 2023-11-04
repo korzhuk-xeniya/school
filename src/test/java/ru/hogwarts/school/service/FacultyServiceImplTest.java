@@ -3,10 +3,7 @@ package ru.hogwarts.school.service;
 import org.junit.jupiter.api.Test;
 import ru.hogwarts.school.exception.FacultyAlreadyExsitsException;
 import ru.hogwarts.school.exception.FacultyNotFoundException;
-import ru.hogwarts.school.exception.StudendAlreadyExsitsException;
-import ru.hogwarts.school.exception.StudentNotFoundException;
 import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.model.Student;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,7 +70,7 @@ class FacultyServiceImplTest {
         underTest.create(faculty3);
         Collection<Faculty> facultiesSortedByColor = new ArrayList<>(Arrays.asList(faculty, faculty3));
         String color = "yellow";
-        Collection <Faculty> result = underTest.facultySorter(color);
+        Collection <Faculty> result = underTest.colorSorter(color);
 
         assertEquals(facultiesSortedByColor, result);
     }
