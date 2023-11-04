@@ -6,9 +6,9 @@ public class Faculty {
     private Long id;
     private String name;
     private String color;
-    private static Long idCounter = 0L;
-    public Faculty(String name, String color) {
-        this.id = ++idCounter;
+
+    public Faculty(Long id, String name, String color) {
+        this.id = id;
         this.name = name;
         this.color = color;
     }

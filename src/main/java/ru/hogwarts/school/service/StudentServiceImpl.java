@@ -13,14 +13,14 @@ import java.util.stream.Collectors;
 @Service
 public class StudentServiceImpl implements StudentService {
     private final Map<Long, Student> repository = new HashMap<>();
-//    private Long idCounter = 0L;
+    private Long idCounter = 0L;
     @Override
     public Student create(Student student) {
         if (repository.containsValue(student)) {
             throw new StudendAlreadyExsitsException("Студент" + student + "уже есть в хранилище");
         }
-//        long id = ++idCounter;
-//        student.setId(id);
+        long id = ++idCounter;
+        student.setId(id);
         repository.put(student.getId(), student);
         return student;
     }
