@@ -1,10 +1,13 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
+import java.awt.*;
 import java.util.Collection;
 import java.util.Map;
 
@@ -48,4 +51,5 @@ public class StudentController {
     public Collection<Student> readByFacultyId(@PathVariable long facultyId) {
         return studentService.readByFacultyId(facultyId);
     }
+
 }
