@@ -32,7 +32,7 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public Avatar findAvatar(Long studentId) {
-        return avatarRepository.findByStudent_id(studentId)
+        return avatarRepository.findByStudentId(studentId)
                 .orElse(new Avatar());
     }
 

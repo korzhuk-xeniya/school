@@ -8,6 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.hogwarts.school.exception.FacultyAlreadyExsitsException;
 import ru.hogwarts.school.exception.FacultyNotFoundException;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ class FacultyServiceImplTest {
     @Test
     void read_shouldReturnFacultyById() {
         when(facultyRepository.findById(faculty.getId())).thenReturn(Optional.of(faculty));
-        facultyService.create(faculty);
+
         Faculty result = facultyService.read(faculty.getId());
 
         assertEquals(faculty, result);
@@ -51,29 +52,36 @@ class FacultyServiceImplTest {
         when(facultyRepository.findById(faculty.getId())).thenReturn(Optional.empty());
         assertThrows(FacultyNotFoundException.class, () -> facultyService.read(faculty.getId()));
     }
+    @Test
+    void update_ShouldUpdateAndReturnUpdateStudent() {
+        when(facultyRepository.findById(faculty.getId())).thenReturn(Optional.of(faculty));
+        when(facultyRepository.save(faculty)).thenReturn(faculty);
+        Faculty result = facultyService.update(faculty);
 
+        assertEquals(faculty, result);
+    }
+    @Test
+    void delete_shouldReturnDeletedFaculty() {
+        when(facultyRepository.findById(faculty.getId())).thenReturn(Optional.of(faculty));
+        facultyService.create(faculty);
+        facultyService.create(faculty2);
+        long id = faculty.getId();
+        Faculty result = facultyService.delete(id);
 
+        assertEquals(faculty, result);
+    }
 
+    @Test
+    void facultySorter_shouldSortedByColor() {
+        String color = "yellow";
+        
+        facultyService.create(faculty);
+        facultyService.create(faculty2);
+        facultyService.create(faculty3);
+        Collection<Faculty> facultiesSortedByColor = new ArrayList<>(Arrays.asList(faculty, faculty3));
+        when(facultyRepository.findByColor(color)).thenReturn( new ArrayList<>(Arrays.asList(faculty, faculty3)));
+        Collection<Faculty> result = facultyService.colorSorter(color);
 
-//    @Test
-//    void delete_shouldReturnDeletedFaculty() {
-//        facultyService.create(faculty);
-//        facultyService.create(faculty2);
-//        long id = faculty.getId();
-//        Faculty result = facultyService.delete(id);
-//
-//        assertEquals(faculty, result);
-//    }
-
-//    @Test
-//    void facultySorter_shouldSortedByColor() {
-//        facultyService.create(faculty);
-//        facultyService.create(faculty2);
-//        facultyService.create(faculty3);
-//        Collection<Faculty> facultiesSortedByColor = new ArrayList<>(Arrays.asList(faculty, faculty3));
-//        String color = "yellow";
-//        Collection<Faculty> result = facultyService.colorSorter(color);
-//
-//        assertEquals(facultiesSortedByColor, result);
-//    }
+        assertEquals(facultiesSortedByColor, result);
+    }
 }

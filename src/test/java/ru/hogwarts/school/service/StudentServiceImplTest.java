@@ -25,23 +25,23 @@ class StudentServiceImplTest {
     StudentRepository repository;
     @InjectMocks
     StudentServiceImpl service;
-//    private StudentServiceImpl underTest = new StudentServiceImpl();
-    private Student student = new Student(1L,"Olga", 23);
-    private Student student2 = new Student(2L,"Harry", 15);
-    private Student student3 = new Student(3L,"Ron", 15);
+    //    private StudentServiceImpl underTest = new StudentServiceImpl();
+    private Student student = new Student(1L, "Olga", 23);
+    private Student student2 = new Student(2L, "Harry", 15);
+    private Student student3 = new Student(3L, "Ron", 15);
 
     @Test
     void create_shouldReturnAddedStudent() {
-        when( repository.save(student)).thenReturn(student);
+        when(repository.save(student)).thenReturn(student);
         Student result = service.create(student);
 
         assertEquals(student, result);
     }
 
-       @Test
+    @Test
     void read_shouldReturnStudentById() {
         when(repository.findAllById(student.getId())).thenReturn(Optional.of(student));
-        service.create(student);
+
         Student result = service.read(student.getId());
 
         assertEquals(student, result);
@@ -55,34 +55,68 @@ class StudentServiceImplTest {
     }
 
 
+    @Test
+    void update_ShouldUpdateAndReturnUpdateStudent() {
+        when(repository.findAllById(student.getId())).thenReturn(Optional.of(student));
+        when(repository.save(student)).thenReturn(student);
+        Student result = service.update(student);
+
+        assertEquals(student, result);
+    }
+
+    @Test
+    void delete_shouldReturnDeletedStudent() {
+        when(repository.findAllById(student.getId())).thenReturn(Optional.of(student));
+        service.create(student);
+
+
+        Student result = service.delete(student.getId());
+
+        assertEquals(student, result);
+    }
+
+
+    @Test
+    void ageSorter_shouldSortedByAge() {
+       service.create(student);
+        service.create(student2);
+        service.create(student3);
+        Collection <Student> studentsSortedByAge = new ArrayList<>(Arrays.asList(student2, student3));
+        int age = 15;
+        when(repository.findAllByAge(age)).thenReturn( new ArrayList<>(Arrays.asList(student2, student3)));
+        Collection <Student> result = service.ageSorter(age);
+
+        assertEquals(studentsSortedByAge, result);
+    }
+
+    @Test
+    void findByAgeBetween() {
+        int ageMin = 11;
+        int ageMax = 18;
+        service.create(student);
+        service.create(student2);
+        service.create(student3);
+        Collection <Student> studentsSortedByAgeBetween = new ArrayList<>(Arrays.asList(student2, student3));
+        when(repository.findByAgeBetween(ageMin,ageMax)).thenReturn( new ArrayList<>(Arrays.asList(student2, student3)));
+        Collection <Student> result = service.findByAgeBetween(ageMin, ageMax);
+
+        assertEquals(studentsSortedByAgeBetween, result);
+    }
+
 //    @Test
-//    void update_ShouldUpdateAndReturnUpdateStudent() {
-//        service.create(student);
-//        when( repository.save(student)).thenReturn(student);
-//        Student result = service.update(student);
-//
-//        assertEquals(student, result);
+//    void readFacultyOfStudent() {
+//        when(repository.findAllById(student.getId())).thenReturn(Optional.of(student));
 //    }
-//    @Test
-//    void delete_shouldReturnDeletedStudent() {
-//        service.create(student);
-
-//        when(repository.delete(student)).thenReturn(student);
-//        Student result = service.delete(student.getId());
 //
-//        assertEquals(student, result);
-//    }
-
-
 //    @Test
-//    void ageSorter_shouldSortedByAge() {
-//       service.create(student);
+//    void readByFacultyId() {
+//        service.create(student);
 //        service.create(student2);
 //        service.create(student3);
-//        Collection <Student> studentsSortedByAge = new ArrayList<>(Arrays.asList(student2, student3));
-//        int age = 15;
-//        Collection <Student> result = service.ageSorter(age);
+//        Collection <Student> studentsSortedByAgeBetween = new ArrayList<>(Arrays.asList(student2, student3));
+//        when(repository.findByFaculty_id()).thenReturn( new ArrayList<>(Arrays.asList(student2, student3)));
+//        Collection <Student> result = service.findByAgeBetween(ageMin, ageMax);
 //
-//        assertEquals(studentsSortedByAge, result);
+//        assertEquals(studentsSortedByAgeBetween, result);
 //    }
 }
