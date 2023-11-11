@@ -32,6 +32,11 @@ public class FacultyController {
     }
     @GetMapping("/color/{color}")
     public Collection<Faculty> facultySorter(@PathVariable String color) {
-        return facultyService.facultySorter(color);
+        return facultyService.colorSorter(color);
+    }
+    @GetMapping
+    public Collection<Faculty> findAllByNameIgnoreCaseOrColorIgnoreCase(@RequestParam String name,
+                                                                        @RequestParam String color){
+        return facultyService.findAllByNameIgnoreCaseOrColorIgnoreCase(name, color);
     }
 }
