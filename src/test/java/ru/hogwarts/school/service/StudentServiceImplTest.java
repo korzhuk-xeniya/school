@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.hogwarts.school.exception.StudendAlreadyExsitsException;
 import ru.hogwarts.school.exception.StudentNotFoundException;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
@@ -29,6 +30,8 @@ class StudentServiceImplTest {
     private Student student = new Student(1L, "Olga", 23);
     private Student student2 = new Student(2L, "Harry", 15);
     private Student student3 = new Student(3L, "Ron", 15);
+    private Faculty faculty = new Faculty(1L, "Griffindor", "yellow");
+    private Faculty faculty2 = new Faculty(2L, "Slytherin", "green");
 
     @Test
     void create_shouldReturnAddedStudent() {
@@ -103,20 +106,31 @@ class StudentServiceImplTest {
         assertEquals(studentsSortedByAgeBetween, result);
     }
 
-//    @Test
-//    void readFacultyOfStudent() {
-//        when(repository.findAllById(student.getId())).thenReturn(Optional.of(student));
-//    }
-//
-//    @Test
-//    void readByFacultyId() {
-//        service.create(student);
-//        service.create(student2);
-//        service.create(student3);
-//        Collection <Student> studentsSortedByAgeBetween = new ArrayList<>(Arrays.asList(student2, student3));
-//        when(repository.findByFaculty_id()).thenReturn( new ArrayList<>(Arrays.asList(student2, student3)));
-//        Collection <Student> result = service.findByAgeBetween(ageMin, ageMax);
-//
-//        assertEquals(studentsSortedByAgeBetween, result);
-//    }
+    @Test
+    void readFacultyOfStudent() {
+    student.setFaculty(faculty);
+    when(repository.findAllById(student.getId())).thenReturn(Optional.of(student));
+    Faculty result = service.readFacultyOfStudent(student.getId());
+
+    assertEquals(faculty, result);
+
+    }
+
+    @Test
+    void readByFacultyId() {
+
+        service.create(student);
+        student.setFaculty(faculty);
+        service.create(student2);
+        student2.setFaculty(faculty);
+        service.create(student3);
+        student3.setFaculty(faculty2);
+        Long facultyId = 1L;
+//        when(repository.findByFaculty_id(student.getId())).thenReturn(Optional.of(student));
+        Collection <Student> studentsSortedByFaulty = new ArrayList<>(Arrays.asList(student, student2));
+        when(repository.findByFaculty_id(facultyId)).thenReturn( new ArrayList<>(Arrays.asList(student, student2)));
+        Collection <Student> result = service.readByFacultyId(facultyId);
+
+        assertEquals(studentsSortedByFaulty, result);
+    }
 }

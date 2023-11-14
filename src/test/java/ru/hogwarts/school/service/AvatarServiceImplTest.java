@@ -72,13 +72,15 @@ class AvatarServiceImplTest {
 
 //    @Test
 //    void readFromFile() {
+//
 //        Avatar avatar = avatarService.findAvatar(student.getId());
+//        avatar.setFilePath(avatarsDir);
 //        Path path = Path.of(avatar.getFilePath());
 //        when(avatarRepository.findById(avatarService.findAvatar(student.getId()).getId()))
 //                .thenReturn(Optional.of(avatar));
-//        File file1 = new File(path.toString());
+////        File file1 = new File(path.toString());
 //        File result = avatarService.readFromFile(avatar.getId());
 //
-//        assertEquals(file1, result);
+//        assertEquals(path, result.toPath().toString());
 //    }
 }
