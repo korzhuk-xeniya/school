@@ -92,7 +92,7 @@ public class StudentControllerWebMvcTest {
 
         when(studentRepository.findByAgeBetween(student3.getAge(), student2.getAge()))
                 .thenReturn(new ArrayList<>(Arrays.asList(student2, student3)));
-        mockMvc.perform(get("/student?minAge&maxAge" + student3.getAge() + student2.getAge()))
+        mockMvc.perform(get("/student?minAge=" + student3.getAge() +  "&maxAge="+ student2.getAge()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.[0]").value(student2))
                 .andExpect(jsonPath("$.[1]").value(student3));
