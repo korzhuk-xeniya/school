@@ -1,5 +1,7 @@
 package ru.hogwarts.school.model;
 
+import org.springframework.http.HttpEntity;
+
 import javax.persistence.*;
 import java.util.Objects;
 @Entity
