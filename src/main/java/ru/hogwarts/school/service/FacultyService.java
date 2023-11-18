@@ -15,5 +15,5 @@ public interface FacultyService {
 
     Collection<Faculty> colorSorter(String color);
 
-    Collection<Faculty> findAllByNameIgnoreCaseOrColorIgnoreCase(String name, String color);
+    Collection<Faculty> findByNameIgnoreCaseOrColorIgnoreCase(String name, String color);
 }

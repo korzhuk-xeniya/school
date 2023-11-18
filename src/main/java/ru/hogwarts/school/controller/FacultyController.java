@@ -37,6 +37,6 @@ public class FacultyController {
     @GetMapping
     public Collection<Faculty> findAllByNameIgnoreCaseOrColorIgnoreCase(@RequestParam String name,
                                                                         @RequestParam String color){
-        return facultyService.findAllByNameIgnoreCaseOrColorIgnoreCase(name, color);
+        return facultyService.findByNameIgnoreCaseOrColorIgnoreCase(name, color);
     }
 }
