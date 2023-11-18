@@ -84,10 +84,10 @@ class FacultyServiceImplTest {
 
         assertEquals(facultiesSortedByColor, result);
     }
-    @Test
-    void findAllByNameIgnoreCaseOrColorIgnoreCase_shouldReturnFacultiesByNameORByColor() {
-        String color = "yellow";
-        String name = "Slytherin";
-
-    }
+//    @Test
+//    void findAllByNameIgnoreCaseOrColorIgnoreCase_shouldReturnFacultiesByNameORByColor() {
+//        String color = "yellow";
+//        String name = "Slytherin";
+//
+//    }
 }

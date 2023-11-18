@@ -51,5 +51,4 @@ public class StudentController {
     public Collection<Student> readByFacultyId(@PathVariable long facultyId) {
         return studentService.readByFacultyId(facultyId);
     }
-
 }
