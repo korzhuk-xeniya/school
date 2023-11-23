@@ -76,14 +76,13 @@ public class FacultyControllerWebMvcTest {
                 .andExpect(jsonPath("$.[0]").value(faculty))
                 .andExpect(jsonPath("$.[1]").value(faculty2));
     }
-//    @Test
-//    void findAllByNameIgnoreCaseOrColorIgnoreCase_shouldReturnFacultiesCollectionAndStatus200() throws Exception {
-//        when(facultyRepository.findAllByNameIgnoreCaseOrColorIgnoreCase(faculty.getName(), faculty2.getColor()))
-//                .thenReturn(List.of(faculty, faculty2));
-//        mockMvc.perform(get("/faculty?name=" + faculty.getName() +"&color=" +  faculty2.getColor()))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.[0]").value(faculty))
-//                .andExpect(jsonPath("$.[1]").value(faculty2));
-//    }
-
+    @Test
+    void findAllByNameIgnoreCaseOrColorIgnoreCase_shouldReturnFacultiesCollectionAndStatus200() throws Exception {
+        when(facultyService.findByNameIgnoreCaseOrColorIgnoreCase(faculty.getName(), faculty2.getColor()))
+                .thenReturn(List.of(faculty, faculty2));
+        mockMvc.perform(get("/faculty?name=" + faculty.getName() +"&color=" +  faculty2.getColor()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.[0]").value(faculty))
+                .andExpect(jsonPath("$.[1]").value(faculty2));
+    }
 }

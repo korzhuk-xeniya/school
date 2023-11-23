@@ -114,7 +114,7 @@ public class StudentControllerRestTemplateTest {
 //        assertEquals(HttpStatus.OK, result.getStatusCode());
 //        assertEquals(faculty, result.getBody());
 
-    }
+//    }
 //    @Test
 //    void readByFacultyId_shouldReturnStudentsCollectionByFacultyId() {
 //        Student student1 = studentRepository.save(student);

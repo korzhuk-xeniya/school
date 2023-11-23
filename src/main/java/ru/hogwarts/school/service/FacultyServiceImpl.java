@@ -1,6 +1,6 @@
 package ru.hogwarts.school.service;
 
-import org.apache.el.stream.Stream;
+//import org.apache.el.stream.Stream;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.exception.FacultyNotFoundException;
 import ru.hogwarts.school.model.Faculty;
@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static org.apache.el.stream.Stream.*;
-
+import java.util.stream.Stream;
 @Service
 public class FacultyServiceImpl implements FacultyService {
     private final FacultyRepository repositoryOfFaculty;
@@ -49,20 +47,20 @@ public class FacultyServiceImpl implements FacultyService {
     public Collection<Faculty> colorSorter(String color) {
         return repositoryOfFaculty.findByColor(color);
     }
-//    @Override
-//    public Collection<Faculty> findByNameIgnoreCaseOrColorIgnoreCase(String name, String color) {
-////        Stream combinedFaculties = Stream.of(repositoryOfFaculty.findByNameIgnoreCase(name),
-////                repositoryOfFaculty.findByColorIgnoreCase(color));
-////         Stream.of(repositoryOfFaculty.findByNameIgnoreCase(name), repositoryOfFaculty.findByColorIgnoreCase(color))
-////                .flatMap(x -> {
-////                    return x.stream();
-////                })
-////                .collect(Collectors.toList());
-//
-//        List<Faculty> list = new ArrayList<Faculty>();
-//        Stream.of(repositoryOfFaculty.findByNameIgnoreCase(name),
-//                repositoryOfFaculty.findByColorIgnoreCase(color)).forEach(list::addAll);
-//        return list;
-//
-//    }
+    @Override
+    public Collection<Faculty> findByNameIgnoreCaseOrColorIgnoreCase(String name, String color) {
+        Stream combinedFaculties = Stream.of(repositoryOfFaculty.findByNameIgnoreCase(name),
+                repositoryOfFaculty.findByColorIgnoreCase(color));
+         Stream.of(repositoryOfFaculty.findByNameIgnoreCase(name), repositoryOfFaculty.findByColorIgnoreCase(color))
+                .flatMap(x -> {
+                    return x.stream();
+                })
+                .collect(Collectors.toList());
+
+        List<Faculty> list = new ArrayList<Faculty>();
+        Stream.of(repositoryOfFaculty.findByNameIgnoreCase(name),
+                repositoryOfFaculty.findByColorIgnoreCase(color)).forEach(list::addAll);
+        return list;
+
+    }
 }
