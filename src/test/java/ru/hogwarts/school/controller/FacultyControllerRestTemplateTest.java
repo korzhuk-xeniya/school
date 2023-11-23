@@ -32,17 +32,20 @@ public class FacultyControllerRestTemplateTest {
     FacultyRepository facultyRepository;
     String baseUrl;
     private Faculty faculty = new Faculty(1L, "Griffindor", "yellow");
+
     @BeforeEach
     void beforeEach() {
         baseUrl = "http://localhost:" + port + "/faculty";
         facultyRepository.deleteAll();
     }
+
     @Test
     void create_shouldReturnFacultyAndStatus200() {
         ResponseEntity<Faculty> result = restTemplate.postForEntity(baseUrl, faculty, Faculty.class);
         assertEquals(HttpStatus.OK, result.getStatusCode());
         assertEquals(faculty, result.getBody());
     }
+
     @Test
     void read_shouldReturnStatus404() {
         ResponseEntity<String> result = restTemplate.getForEntity(baseUrl + "/" + faculty.getId(), String.class);
@@ -50,6 +53,7 @@ public class FacultyControllerRestTemplateTest {
         assertEquals("Факультет с id " + faculty.getId() + " не найден в хранилище", result.getBody());
 
     }
+
     @Test
     void update_shouldReturnFacultyAndStatus200() {
         Faculty saveFaculty = facultyRepository.save(faculty);
@@ -59,6 +63,7 @@ public class FacultyControllerRestTemplateTest {
         assertEquals(HttpStatus.OK, result.getStatusCode());
         assertEquals(faculty, result.getBody());
     }
+
     @Test
     void delete_shouldReturnStatus200AndFaculty() {
         Faculty saveFaculty = facultyRepository.save(faculty);
@@ -68,6 +73,7 @@ public class FacultyControllerRestTemplateTest {
         assertEquals(HttpStatus.OK, result.getStatusCode());
         assertEquals(saveFaculty, result.getBody());
     }
+
     @Test
     void facultySorter_shouldReturnFacultiesCollectionAndStatus200() {
         Faculty saveFaculty = facultyRepository.save(faculty);
@@ -81,7 +87,7 @@ public class FacultyControllerRestTemplateTest {
                 new ParameterizedTypeReference<>() {
                 });
         assertEquals(HttpStatus.OK, result.getStatusCode());
-        assertEquals(List.of(saveFaculty,faculty3), result.getBody());
+        assertEquals(List.of(saveFaculty, faculty3), result.getBody());
     }
 
 }

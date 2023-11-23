@@ -34,6 +34,7 @@ public class StudentControllerRestTemplateTest {
     void beforeEach() {
         baseUrl = "http://localhost:" + port + "/student";
         studentRepository.deleteAll();
+        facultyRepository.deleteAll();
     }
 
     @Test
@@ -100,21 +101,21 @@ public class StudentControllerRestTemplateTest {
         assertEquals(HttpStatus.OK, result.getStatusCode());
         assertEquals(List.of(student2,student3), result.getBody());
     }
-//    @Test
-//    void readFacultyOfStudent_shouldReturnFacultyByStudentId() {
-//        Student student1 = studentRepository.save(student);
-//        Faculty saveFaculty = new Faculty(1L, "Griffindor", "yellow");
-//        Faculty faculty = facultyRepository.save(saveFaculty);
-//        student.setFaculty(faculty);
-//        ResponseEntity<Faculty> result = restTemplate.getForEntity(baseUrl + "/faculty/" + student.getId(),faculty, Faculty.class);
-////        ResponseEntity<Faculty> result = restTemplate.exchange(baseUrl + "/faculty/"+ student1.getId(),
-////                HttpMethod.GET,
-////                faculty,
-////                Faculty.class);
-//        assertEquals(HttpStatus.OK, result.getStatusCode());
-//        assertEquals(faculty, result.getBody());
+    @Test
+    void readFacultyOfStudent_shouldReturnFacultyByStudentId() {
+        Student student1 = studentRepository.save(student);
+        Faculty saveFaculty = new Faculty(2L, "Griffindor", "yellow");
+        Faculty faculty = facultyRepository.save(saveFaculty);
+        student1.setFaculty(faculty);
+//
+        ResponseEntity<Faculty> result = restTemplate.getForEntity(baseUrl + "/faculty/" + student1.getId(), Faculty.class);
+//        ResponseEntity<Faculty> result = restTemplate.exchange(baseUrl + "/faculty/"+ student1.getId(),
+//                HttpMethod.GET,
+//        faculty, Faculty.class);
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals(faculty, result.getBody());
 
-//    }
+    }
 //    @Test
 //    void readByFacultyId_shouldReturnStudentsCollectionByFacultyId() {
 //        Student student1 = studentRepository.save(student);
@@ -122,12 +123,19 @@ public class StudentControllerRestTemplateTest {
 //        Student student2 = studentRepository.save(saveStudent2);
 //        Student saveStudent3 = new Student(3L, "Ron", 11);
 //        Student student3 = studentRepository.save(saveStudent3);
-//        Faculty faculty = new Faculty(1L, "Griffindor", "yellow");
-//        Faculty faculty2 = new Faculty(2L, "Slytherin", "green");
-//        student.setFaculty(faculty);
+//        Faculty saveFaculty = new Faculty(4L, "Griffindor", "yellow");
+//        Faculty faculty = facultyRepository.save(saveFaculty);
+//        Faculty saveFaculty2 = new Faculty(5L, "Slytherin", "green");
+//        Faculty faculty2 = facultyRepository.save(saveFaculty2);
+//        student1.setFaculty(faculty);
 //        student2.setFaculty(faculty);
 //        student3.setFaculty(faculty2);
-//        restTemplate.getForEntity(baseUrl + "/faculty/"+);
-//
+//        ResponseEntity<List<Student>> result = restTemplate.exchange(baseUrl + "/faculty/"+ faculty.getId(),
+//                HttpMethod.GET,
+//                null,
+//                new ParameterizedTypeReference<>() {
+//                });
+//        assertEquals(HttpStatus.OK, result.getStatusCode());
+//        assertEquals(List.of(student1,student2), result.getBody());
 //    }
 }

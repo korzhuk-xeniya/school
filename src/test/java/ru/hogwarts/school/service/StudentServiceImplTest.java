@@ -125,7 +125,6 @@ class StudentServiceImplTest {
         service.create(student3);
         student3.setFaculty(faculty2);
         Long facultyId = 1L;
-//        when(repository.findByFaculty_id(student.getId())).thenReturn(Optional.of(student));
         Collection <Student> studentsSortedByFaulty = new ArrayList<>(Arrays.asList(student, student2));
         when(repository.findByFaculty_id(facultyId)).thenReturn( new ArrayList<>(Arrays.asList(student, student2)));
         Collection <Student> result = service.readByFacultyId(facultyId);
