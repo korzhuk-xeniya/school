@@ -84,8 +84,9 @@ public class StudentControllerRestTemplateTest {
                 new ParameterizedTypeReference<>() {
                 });
         assertEquals(HttpStatus.OK, result.getStatusCode());
-        assertEquals(List.of(student2,student3), result.getBody());
+        assertEquals(List.of(student2, student3), result.getBody());
     }
+
     @Test
     void findByAgeBetween_shouldReturnStudentsCollectionsWithAgeBetweenMinAgeAndMaxAge() {
         Student student1 = studentRepository.save(student);
@@ -99,14 +100,15 @@ public class StudentControllerRestTemplateTest {
                 new ParameterizedTypeReference<>() {
                 });
         assertEquals(HttpStatus.OK, result.getStatusCode());
-        assertEquals(List.of(student2,student3), result.getBody());
+        assertEquals(List.of(student2, student3), result.getBody());
     }
+
     @Test
     void readFacultyOfStudent_shouldReturnFacultyByStudentId() {
-        Student student1 = studentRepository.save(student);
         Faculty saveFaculty = new Faculty(2L, "Griffindor", "yellow");
         Faculty faculty = facultyRepository.save(saveFaculty);
-        student1.setFaculty(faculty);
+        student.setFaculty(faculty);
+        Student student1 = studentRepository.save(student);
 //
         ResponseEntity<Faculty> result = restTemplate.getForEntity(baseUrl + "/faculty/" + student1.getId(), Faculty.class);
 //        ResponseEntity<Faculty> result = restTemplate.exchange(baseUrl + "/faculty/"+ student1.getId(),
@@ -116,26 +118,28 @@ public class StudentControllerRestTemplateTest {
         assertEquals(faculty, result.getBody());
 
     }
-//    @Test
-//    void readByFacultyId_shouldReturnStudentsCollectionByFacultyId() {
-//        Student student1 = studentRepository.save(student);
-//        Student saveStudent2 = new Student(2L, "Harry", 15);
-//        Student student2 = studentRepository.save(saveStudent2);
-//        Student saveStudent3 = new Student(3L, "Ron", 11);
-//        Student student3 = studentRepository.save(saveStudent3);
-//        Faculty saveFaculty = new Faculty(4L, "Griffindor", "yellow");
-//        Faculty faculty = facultyRepository.save(saveFaculty);
-//        Faculty saveFaculty2 = new Faculty(5L, "Slytherin", "green");
-//        Faculty faculty2 = facultyRepository.save(saveFaculty2);
-//        student1.setFaculty(faculty);
-//        student2.setFaculty(faculty);
-//        student3.setFaculty(faculty2);
-//        ResponseEntity<List<Student>> result = restTemplate.exchange(baseUrl + "/faculty/"+ faculty.getId(),
-//                HttpMethod.GET,
-//                null,
-//                new ParameterizedTypeReference<>() {
-//                });
-//        assertEquals(HttpStatus.OK, result.getStatusCode());
-//        assertEquals(List.of(student1,student2), result.getBody());
-//    }
+
+    @Test
+    void readByFacultyId_shouldReturnStudentsCollectionByFacultyId() {
+
+
+        Faculty saveFaculty = new Faculty(4L, "Griffindor", "yellow");
+        Faculty faculty = facultyRepository.save(saveFaculty);
+        Faculty saveFaculty2 = new Faculty(5L, "Slytherin", "green");
+        Faculty faculty2 = facultyRepository.save(saveFaculty2);
+        Student saveStudent2 = new Student(2L, "Harry", 15);
+
+        student.setFaculty(faculty);
+        saveStudent2.setFaculty(faculty);
+
+        Student student1 = studentRepository.save(student);
+        Student student2 = studentRepository.save(saveStudent2);
+        ResponseEntity<List<Student>> result = restTemplate.exchange(baseUrl + "/studentsOfFaculty/" + faculty.getId(),
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<>() {
+                });
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals(List.of(student1, student2), result.getBody());
+    }
 }

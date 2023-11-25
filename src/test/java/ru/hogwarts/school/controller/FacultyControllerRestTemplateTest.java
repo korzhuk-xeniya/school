@@ -12,7 +12,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import ru.hogwarts.school.model.Faculty;
-import ru.hogwarts.school.model.Student;
+
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 
