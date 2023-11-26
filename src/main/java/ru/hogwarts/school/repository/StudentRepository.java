@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
     Optional<Object> findAllById(long id);
-    Collection<Student> findAllByAge(int age);
+    Collection<Student> findByAge(int age);
     Collection<Student> findByAgeBetween(int minAge, int maxAge);
     Collection<Student> findByFaculty_id(long facultyId);
 }

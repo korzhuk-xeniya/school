@@ -5,7 +5,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.hogwarts.school.exception.StudendAlreadyExsitsException;
 import ru.hogwarts.school.exception.StudentNotFoundException;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
@@ -86,14 +85,14 @@ class StudentServiceImplTest {
         service.create(student3);
         Collection <Student> studentsSortedByAge = new ArrayList<>(Arrays.asList(student2, student3));
         int age = 15;
-        when(repository.findAllByAge(age)).thenReturn( new ArrayList<>(Arrays.asList(student2, student3)));
+        when(repository.findByAge(age)).thenReturn( new ArrayList<>(Arrays.asList(student2, student3)));
         Collection <Student> result = service.ageSorter(age);
 
         assertEquals(studentsSortedByAge, result);
     }
 
     @Test
-    void findByAgeBetween() {
+    void findByAgeBetween_shouldReturnStudentsCollectionsWithAgeBetweenMinAgeAndMaxAge() {
         int ageMin = 11;
         int ageMax = 18;
         service.create(student);
@@ -107,7 +106,7 @@ class StudentServiceImplTest {
     }
 
     @Test
-    void readFacultyOfStudent() {
+    void readFacultyOfStudent_shouldReturnFacultyByStudentId() {
     student.setFaculty(faculty);
     when(repository.findAllById(student.getId())).thenReturn(Optional.of(student));
     Faculty result = service.readFacultyOfStudent(student.getId());
@@ -117,7 +116,7 @@ class StudentServiceImplTest {
     }
 
     @Test
-    void readByFacultyId() {
+    void readByFacultyId_shouldReturnStudentsCollectionByFacultyId() {
 
         service.create(student);
         student.setFaculty(faculty);
@@ -126,7 +125,6 @@ class StudentServiceImplTest {
         service.create(student3);
         student3.setFaculty(faculty2);
         Long facultyId = 1L;
-//        when(repository.findByFaculty_id(student.getId())).thenReturn(Optional.of(student));
         Collection <Student> studentsSortedByFaulty = new ArrayList<>(Arrays.asList(student, student2));
         when(repository.findByFaculty_id(facultyId)).thenReturn( new ArrayList<>(Arrays.asList(student, student2)));
         Collection <Student> result = service.readByFacultyId(facultyId);
