@@ -1,6 +1,9 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.exception.AvatarNotFoundException;
@@ -82,6 +85,12 @@ public class AvatarServiceImpl implements AvatarService {
         Path path = Path.of(avatar.getFilePath());
 
         return new File(path.toString());
+    }
+
+    @Override
+    public Page<Avatar> getAllAvatars(Integer pageNo, Integer pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+        return avatarRepository.findAll(paging);
     }
 
 }
