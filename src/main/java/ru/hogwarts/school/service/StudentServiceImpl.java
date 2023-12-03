@@ -9,6 +9,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -34,7 +35,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student update(Student student) {
-        logger.info("Был вызван метод для обновления студента", student;
+        logger.info("Был вызван метод для обновления студента", student);
         read(student.getId());
         return repository.save(student);
     }
@@ -66,5 +67,22 @@ public class StudentServiceImpl implements StudentService {
     public Collection<Student> readByFacultyId(long facultyId) {
         logger.info("Был вызван метод для поиска всех студентов факультета по id факультета", facultyId);
         return repository.findByFaculty_id(facultyId);
+    }
+    @Override
+    public Collection<String> getFilteredByNameAndTernToUpperCase(){
+        return repository.findAll().stream()
+                .map(Student::getName)
+                .map(String::toUpperCase)
+                .filter(s -> s.startsWith("A"))
+                .sorted()
+                .collect(Collectors.toList());
+    }
+    @Override
+    public  Double getAllStudentAvgAge() {
+        return repository.findAll()
+                .stream()
+                .mapToInt(Student::getAge)
+                .average()
+                .orElse(0);
     }
 }

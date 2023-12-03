@@ -1,5 +1,6 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -58,5 +59,17 @@ public class StudentController {
     @GetMapping("/studentsOfFaculty/{facultyId}")
     public Collection<Student> readByFacultyId(@PathVariable long facultyId) {
         return studentService.readByFacultyId(facultyId);
+    }
+    @GetMapping("/filteredbyname")
+    public ResponseEntity<Collection<String>> getAllStudentsWithAName() {
+        Collection <String> stringCollection = studentService.getFilteredByNameAndTernToUpperCase();
+        if (stringCollection.size() == 0) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(stringCollection);
+    }
+    @GetMapping("/getallstudentsavgage")
+    public  Double getAllStudentsAvgAge () {
+        return studentService.getAllStudentAvgAge();
     }
 }
