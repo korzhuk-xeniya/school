@@ -3,14 +3,13 @@ package ru.hogwarts.school.service;
 //import org.apache.el.stream.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.exception.FacultyNotFoundException;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repository.FacultyRepository;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 @Service
@@ -70,6 +69,24 @@ public class FacultyServiceImpl implements FacultyService {
         Stream.of(repositoryOfFaculty.findByNameIgnoreCase(name),
                 repositoryOfFaculty.findByColorIgnoreCase(color)).forEach(list::addAll);
         return list;
+    }
+    @Override
+    public ResponseEntity<String> getFacultyWithMaxLength(){
+        logger.info("Был вызван метод для поиска факультета с самым длинным названием");
+
+                Optional<String> maxFacultyName =  repositoryOfFaculty
+                        .findAll()
+                        .stream()
+                        .map(Faculty::getName)
+                        .max(Comparator.comparing(String::length));
+        if (maxFacultyName.isEmpty()) {
+            logger.error("В хранилоще нет факультетов");
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(maxFacultyName.get());
+        }
+
+
 
     }
 }

@@ -21,4 +21,8 @@ public interface StudentService {
     Faculty readFacultyOfStudent(long id);
 
     Collection<Student> readByFacultyId(long facultyId);
+
+    Collection<String> getFilteredByNameAndTernToUpperCase();
+
+    Double getAllStudentAvgAge();
 }
