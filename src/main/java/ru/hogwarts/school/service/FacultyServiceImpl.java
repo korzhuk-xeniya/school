@@ -73,7 +73,7 @@ public class FacultyServiceImpl implements FacultyService {
     @Override
     public ResponseEntity<String> getFacultyWithMaxLength(){
         logger.info("Был вызван метод для поиска факультета с самым длинным названием");
-        return
+
                 Optional<String> maxFacultyName =  repositoryOfFaculty
                         .findAll()
                         .stream()
