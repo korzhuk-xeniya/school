@@ -25,4 +25,9 @@ public interface StudentService {
     Collection<String> getFilteredByNameAndTernToUpperCase();
 
     Double getAllStudentAvgAge();
+    void getStudentNames() throws InterruptedException;
+    void getStudentNamesWait();
+
+
+    void getStudentNamesSync();
 }
